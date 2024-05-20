@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 function Header() {
   const [active, setActive] = useState("Home");
@@ -21,12 +21,12 @@ function Header() {
     <>
       <div className="container-fluid bg-light py-1 ">
         <div className="header d-flex justify-content-between align-items-center">
-          <a
+          <NavLink
             className="text-dark fs-bolder text-decoration-none fw-bold fs-3 cursor-pointers"
             to="/"
           >
             Contact-App
-          </a>
+          </NavLink>
 
           <ul className="navbar align-items-center mt-2 fw-normal fs-5">
             <li>
