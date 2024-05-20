@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from "react";
 import fireDb from "../firebase";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Home() {
+  const navigate = useNavigate();
+  const getItem = localStorage.getItem("c-login")
+  console.log(getItem);
+  useEffect(() => {
+    if (getItem) {
+      navigate("/")
+    }
+    else {
+      navigate("/login")
+    }
+  })
+
   const [data, setData] = useState({});
 
   const onDelete = (id) => {
@@ -66,7 +78,7 @@ function Home() {
                         Delete
                       </button>
 
-                      <Link to={`/delete/${id}`}>
+                      <Link to={`/view/${id}`}>
                         <button className="btn btn-light">View</button>
                       </Link>
                     </td>

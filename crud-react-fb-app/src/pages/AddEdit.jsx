@@ -12,6 +12,17 @@ const initalState = {
 
 function AddEdit() {
   const navigate = useNavigate();
+  const getItem = localStorage.getItem("c-login")
+  console.log(getItem);
+  useEffect(() => {
+    if (getItem) {
+      navigate("/add")
+    }
+    else {
+      navigate("/login")
+    }
+  })
+
 
   const [state, setState] = useState(initalState);
   const [data, setData] = useState({});

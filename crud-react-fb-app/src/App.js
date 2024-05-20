@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useNavigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import './App.css';
@@ -7,18 +7,29 @@ import About from "./pages/About";
 import AddEdit from "./pages/AddEdit";
 import View from "./pages/View";
 import Header from "./components/Header";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import { useEffect } from "react";
+import PrivateComponent from "./components/Private";
 
 function App() {
+  const navigate = useNavigate()
+
   return (
     <div className="App">
+
       <Header />
       <ToastContainer position="top-center" />
       <Routes>
-        <Route exact path='/' element={<Home />} />
-        <Route exact path="/about" element={<About />} />
-        <Route exact path="/add" element={<AddEdit />} />
-        <Route exact path="/update/:id" element={<AddEdit />} />
-        <Route exact path="/view/:id" element={<View />} />
+        <Route exact path='/signup' element={<Signup />} />
+        <Route exact path='/login' element={<Login />} />
+        <Route element={<PrivateComponent />}>
+          <Route exact path='/' element={<Home />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/add" element={<AddEdit />} />
+          <Route exact path="/update/:id" element={<AddEdit />} />
+          <Route exact path="/view/:id" element={<View />} />
+        </Route>
       </Routes>
     </div>
   );

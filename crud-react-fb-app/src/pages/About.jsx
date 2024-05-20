@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function About() {
-  return (
-    <div>About</div>
-  )
+  const navigate = useNavigate();
+  const getItem = localStorage.getItem("c-login");
+  console.log(getItem);
+  useEffect(() => {
+    if (getItem) {
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  });
+  return <div>About</div>;
 }
 
-export default About
+export default About;
