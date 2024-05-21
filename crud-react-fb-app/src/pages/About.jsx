@@ -3,15 +3,16 @@ import { useNavigate } from "react-router-dom";
 
 function About() {
   const navigate = useNavigate();
-  const getItem = localStorage.getItem("c-login");
-  console.log(getItem);
+
   useEffect(() => {
+    const getItem = localStorage.getItem("c-login");
+    console.log(getItem);
     if (getItem) {
-      navigate("/");
+      navigate("/about");
     } else {
       navigate("/login");
     }
-  });
+  },[]);
   return <div>About</div>;
 }
 

@@ -19,10 +19,14 @@ function Signup() {
         auth,
         email,
         password
-      ).then((user) => {
-        console.log("user signup", user).catch((err) => alert(err));
-      });
-      const user = userCredential.user;
+      )
+        .then((user) => {
+          console.log("user signup", user);
+        })
+        .catch((err) => alert(err));
+
+      const user = userCredential;
+      console.log(user);
 
       localStorage.setItem("token", user.accessToken);
       localStorage.setItem("user", JSON.stringify(user));
@@ -31,6 +35,16 @@ function Signup() {
       alert("passowrd not match");
     }
   };
+  useEffect(() => {
+    const getItem = localStorage.getItem("c-login");
+    console.log(getItem);
+    if (getItem) {
+      navigate("/");
+    } else {
+      navigate("/signup");
+    }
+  }, []);
+
   return (
     <div>
       <section className="vh-100" style={{ backgroundColor: "#eee" }}>

@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { useEffect } from "react";
 import PrivateComponent from "./components/Private";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const navigate = useNavigate()
@@ -21,6 +22,10 @@ function App() {
       <Header />
       <ToastContainer position="top-center" />
       <Routes>
+        <Route
+          path="*"
+          element={<PageNotFound />}
+        />
         <Route exact path='/signup' element={<Signup />} />
         <Route exact path='/login' element={<Login />} />
         <Route element={<PrivateComponent />}>

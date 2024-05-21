@@ -5,16 +5,17 @@ import { toast } from "react-toastify";
 
 function Home() {
   const navigate = useNavigate();
-  const getItem = localStorage.getItem("c-login")
-  console.log(getItem);
+  
   useEffect(() => {
+    const getItem = localStorage.getItem("c-login")
+    console.log(getItem);
     if (getItem) {
-      navigate("/")
+      navigate("/ ")
     }
     else {
       navigate("/login")
     }
-  })
+  },[])
 
   const [data, setData] = useState({});
 

@@ -29,12 +29,12 @@ function View() {
   console.log(getItem);
   useEffect(() => {
     if (getItem) {
-      navigate("/")
+      navigate(`/view/${id}`)
     }
     else {
       navigate("/login")
     }
-  })
+  },[])
 
   return (
     <div className="mt-5">

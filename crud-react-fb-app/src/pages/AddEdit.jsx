@@ -12,17 +12,25 @@ const initalState = {
 
 function AddEdit() {
   const navigate = useNavigate();
-  const getItem = localStorage.getItem("c-login")
-  console.log(getItem);
   useEffect(() => {
+    const getItem = localStorage.getItem("c-login");
+    console.log(getItem);
     if (getItem) {
-      navigate("/add")
+      navigate("/add");
+    } else {
+      navigate("/login");
     }
-    else {
-      navigate("/login")
-    }
-  })
+  }, []);
 
+  useEffect(() => {
+    const getItem = localStorage.getItem("c-login");
+    console.log(getItem);
+    if (getItem) {
+      navigate(`/update/${id}`);
+    } else {
+      navigate("/login");
+    }
+  }, []);
 
   const [state, setState] = useState(initalState);
   const [data, setData] = useState({});
@@ -137,7 +145,9 @@ function AddEdit() {
         </div>
 
         {id ? (
-          <button className="btn btn-outline-info" onClick={handleUpdate}>Update</button>
+          <button className="btn btn-outline-info" onClick={handleUpdate}>
+            Update
+          </button>
         ) : (
           <button className="btn btn-outline-primary" onClick={handleSubmit}>
             Submit

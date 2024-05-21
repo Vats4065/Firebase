@@ -1,27 +1,46 @@
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+  const auth = getAuth();
 
   const [login, setLogin] = useState(false);
-  // const getItem = localStorage.getItem("c-login")
-  // console.log(getItem);
-  // useEffect(() => {
-  //   if (getItem) {
-  //     navigate("/")
-  //   }
-  //   else {
-  //     navigate("/login")
-  //   }
-  // })
+
   const [email, setEmail] = useState("");
   const [passowrd, setPassword] = useState("");
 
-  const handleLog = (e) => {
+  const handleLog = async (e) => {
     e.preventDefault();
-    console.log();
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        passowrd
+      );
+      console.log(userCredential.user);
+
+      console.log();
+
+      const user = userCredential.user;
+      const getItem = localStorage.setItem("c-login", user.accessToken);
+      console.log(getItem);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    const getItem = localStorage.getItem("c-login");
+    console.log(getItem);
+    if (getItem) {
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  },[]);
 
   return (
     <div className="mt-3">
@@ -70,8 +89,9 @@ function Login() {
                   data-mdb-button-init
                   data-mdb-ripple-init
                   className="btn btn-primary btn-lg btn-block"
+                  onClick={handleLog}
                 >
-                  Sign in
+                  Login
                 </button>
 
                 <div className="mt-3">

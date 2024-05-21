@@ -27,10 +27,11 @@ function Header() {
   }, [location]);
 
   const logout = async () => {
-    await signOut(auth);
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login")
+    if (window.confirm("are you sure for logout")) {
+      await signOut(auth);
+      localStorage.removeItem("c-login");
+      navigate("/login");
+    }
   };
 
   return (
@@ -93,7 +94,7 @@ function Header() {
                 </li>
                 <li>
                   <NavLink
-                    className={`text-decoration-none text-dark ${
+                    className={`text-decoration-none text-dark me-3${
                       active === "AddContact" ? "active" : ""
                     }`}
                     to="add"
@@ -103,7 +104,12 @@ function Header() {
                   </NavLink>
                 </li>
                 <li>
-                  <Link onClick={logout}></Link>
+                  <Link
+                    className="text-decoration-none text-dark "
+                    onClick={logout}
+                  >
+                    logout
+                  </Link>
                 </li>
               </>
             )}
