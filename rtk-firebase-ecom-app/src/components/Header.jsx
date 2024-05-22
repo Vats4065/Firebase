@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./Header.module.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { toast } from "react-toastify";
 
 const logo = (
   <div className={styles.logo}>
@@ -44,35 +47,64 @@ const cart = (
 );
 
 const Header = () => {
+  const navigate = useNavigate();
+  const getItem = localStorage.getItem("eshop-login");
+  const getGoogleItem = localStorage.getItem("eshop-google-login");
+  const logoutUser = () => {
+    if (window.confirm("Are You Sure To Logout")) {
+      signOut(auth)
+        .then(() => {
+          localStorage.removeItem("eshop-login");
+          toast.success("logout successfully");
+          navigate("/login");
+        })
+        .catch((err) => {
+          toast.error("something went wrong");
+        });
+    }
+  };
   return (
     <header className="bg-dark header d-flex align-items-center justify-content-between px-2">
       <div className={`${styles.header} navbar bg-dark`}>{logo}</div>
-      <div className={styles.menu}>{menu}</div>
+      {getItem || !getGoogleItem ? null : (
+        <div className={styles.menu}>{menu}</div>
+      )}
       <div
         className={`${styles.links} ${styles.navRight} d-flex align-items-center`}
       >
-        <NavLink
-          to="/login"
-          style={{ marginLeft: "10px" }}
-          className={({ isActive }) => (isActive ? `${styles.active}` : "")}
-        >
-          Login
-        </NavLink>
-        <NavLink
-          to="/signup"
-          style={{ marginLeft: "10px" }}
-          className={({ isActive }) => (isActive ? `${styles.active}` : "")}
-        >
-          Register
-        </NavLink>
-        <NavLink
-          to="/orderHistory"
-          style={{ marginLeft: "10px" }}
-          className={({ isActive }) => (isActive ? `${styles.active}` : "")}
-        >
-          My orders
-        </NavLink>
-        {cart}
+        {getItem || !getGoogleItem ? (
+          <>
+            {" "}
+            <NavLink
+              to="/login"
+              style={{ marginLeft: "10px" }}
+              className={({ isActive }) => (isActive ? `${styles.active}` : "")}
+            >
+              Login
+            </NavLink>
+            <NavLink
+              to="/signup"
+              style={{ marginLeft: "10px" }}
+              className={({ isActive }) => (isActive ? `${styles.active}` : "")}
+            >
+              Register
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink
+              to="/orderHistory"
+              style={{ marginLeft: "10px" }}
+              className={({ isActive }) => (isActive ? `${styles.active}` : "")}
+            >
+              My orders
+            </NavLink>
+            {cart}
+            <NavLink to="/" style={{ marginLeft: "10px" }} onClick={logoutUser}>
+              Logout
+            </NavLink>
+          </>
+        )}
       </div>
     </header>
   );
