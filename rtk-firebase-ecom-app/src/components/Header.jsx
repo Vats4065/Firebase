@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase";
@@ -100,7 +100,7 @@ const Header = () => {
     }
   };
   return (
-    <header className="bg-dark header d-flex align-items-center justify-content-between px-2">
+    <header className="bg-dark header d-flex align-items-center justify-content-between px-2 ">
       <div className={`${styles.header} navbar bg-dark`}>{logo}</div>
 
       <ShowOnLogin>
@@ -129,10 +129,10 @@ const Header = () => {
         </ShowOnLogout>
 
         <ShowOnLogin>
-          <div className="username text-white opacity-75 d-flex align-items-center">
+          <Link className="username text-white opacity-75 d-flex align-items-center" to="/user" >
             {" "}
             <IoPersonCircle className="fs-3 me-1"></IoPersonCircle> {username}
-          </div>
+          </Link>
           <NavLink
             to="/orderHistory"
             style={{ marginLeft: "10px" }}

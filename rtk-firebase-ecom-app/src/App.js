@@ -12,6 +12,8 @@ import Signup from "./pages/signup/Signup.jsx";
 import "react-toastify/ReactToastify.min.css"
 import { ToastContainer } from "react-toastify";
 import PrivateComponent from "./components/Private.jsx";
+import Error from "./components/Error.jsx";
+import UserInfo from "./pages/User/ UserInfo.jsx";
 
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
       <Header />
       <ToastContainer position="top-right" />
       <Routes>
+        <Route path="/*" element={<Error />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route element={<PrivateComponent></PrivateComponent>}>
@@ -29,6 +32,7 @@ function App() {
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/orderHistory" element={<OrderHistory />}></Route>
           <Route path="/admin" element={<Admin />}></Route>
+          <Route path="/user" element={<UserInfo/>}></Route>
         </Route>
 
       </Routes>
