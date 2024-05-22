@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 
 const Signup = () => {
-  const [username, setUsername] = useState("");
   const [cpassword, setCpassword] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,18 +16,22 @@ const Signup = () => {
 
   const navigate = useNavigate();
   const handleGoogleSignup = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      const user = data.user.accessToken;
-      console.log(user);
-      localStorage.setItem("ecom-signup", user);
-      toast.success("Welcome to eShop");
-      navigate("/");
-    });
+    signInWithPopup(auth, provider)
+      .then((data) => {
+        const user = data.user.accessToken;
+        console.log(user);
+        localStorage.setItem("eshop-signup", user);
+        toast.success("Welcome to eShop");
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
 
   const handleSignup = (e) => {
     e.preventDefault();
-    console.log(username, email, password, cpassword);
+    console.log(email, password, cpassword);
     if (password !== cpassword) {
       toast.error("password not match");
     } else {
@@ -53,7 +56,7 @@ const Signup = () => {
       {isLoading && <Loader />}
       <div className="signup w-50 mx-auto my-5 bg-light px-5 rounded">
         <form className="py-5">
-          <div data-mdb-input-init className="form-outline mb-4">
+          {/* <div data-mdb-input-init className="form-outline mb-4">
             <input
               type="email"
               id="form2Example1"
@@ -65,7 +68,7 @@ const Signup = () => {
             <label className="form-label" htmlFor="form2Example1">
               Username
             </label>
-          </div>
+          </div> */}
           <div data-mdb-input-init className="form-outline mb-4">
             <input
               type="email"
