@@ -12,25 +12,30 @@ const initalState = {
 
 function AddEdit() {
   const navigate = useNavigate();
-  useEffect(() => {
-    const getItem = localStorage.getItem("c-login");
-    console.log(getItem);
-    if (getItem) {
-      navigate("/add");
-    } else {
-      navigate("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const getItem = localStorage.getItem("c-login");
+  //   console.log(getItem);
+  //   if (getItem) {
+  //     navigate("/add");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    const getItem = localStorage.getItem("c-login");
-    console.log(getItem);
-    if (getItem) {
-      navigate(`/update/${id}`);
-    } else {
-      navigate("/login");
-    }
-  }, []);
+  const { id } = useParams();
+  // useEffect(() => {
+  //   const getItem = localStorage.getItem("c-login");
+  //   console.log(getItem);
+  //   if (getItem) {
+  //     if (localStorage.getItem("edit") === null) {
+  //       navigate("/add");
+  //     } else {
+  //       navigate(`/update/${id}`);
+  //     }
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   const [state, setState] = useState(initalState);
   const [data, setData] = useState({});
@@ -40,8 +45,6 @@ function AddEdit() {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
-
-  const { id } = useParams();
 
   useEffect(() => {
     fireDb.child("contacts").on("value", (res) => {

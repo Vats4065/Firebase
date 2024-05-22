@@ -5,17 +5,16 @@ import { toast } from "react-toastify";
 
 function Home() {
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-    const getItem = localStorage.getItem("c-login")
+    const getItem = localStorage.getItem("c-login");
     console.log(getItem);
     if (getItem) {
-      navigate("/ ")
+      navigate("/ ");
+    } else {
+      navigate("/login");
     }
-    else {
-      navigate("/login")
-    }
-  },[])
+  }, []);
 
   const [data, setData] = useState({});
 
@@ -69,7 +68,14 @@ function Home() {
                     <td>{data[id].contact}</td>
                     <td className="d-flex">
                       <Link to={`/update/${id}`}>
-                        <button className="btn btn-info me-3">Edit</button>
+                        <button
+                          className="btn btn-info me-3"
+                          onClick={() => {
+                            localStorage.setItem("edit", "true");
+                          }}
+                        >
+                          Edit
+                        </button>
                       </Link>
 
                       <button

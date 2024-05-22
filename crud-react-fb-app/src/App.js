@@ -9,12 +9,12 @@ import View from "./pages/View";
 import Header from "./components/Header";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import { useEffect } from "react";
+
 import PrivateComponent from "./components/Private";
 import PageNotFound from "./pages/PageNotFound";
 
 function App() {
-  const navigate = useNavigate()
+
 
   return (
     <div className="App">

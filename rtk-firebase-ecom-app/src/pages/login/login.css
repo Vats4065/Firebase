@@ -1,0 +1,35 @@
+.icon_g:hover {
+  box-shadow: 0px 0px 13px rgb(247, 26, 26);
+  border-radius: 100px;
+
+  transform: scale(1.5);
+}
+
+.icon_g {
+  transition: all 0.5s;
+}
+
+.icon_f {
+  transition: all 0.5s;
+}
+
+.icon_f:hover {
+  box-shadow: 0px 0px 13px rgb(0, 89, 255);
+  border-radius: 100px;
+  transform: scale(1.5);
+}
+
+form {
+  animation: form 1s ease-in-out 0s backwards;
+}
+
+@keyframes form {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0px);
+  }
+}

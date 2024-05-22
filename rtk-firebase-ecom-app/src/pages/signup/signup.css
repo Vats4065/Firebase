@@ -1,0 +1,14 @@
+form {
+  animation: form 1s ease-in-out 0s backwards;
+}
+
+@keyframes form {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0px);
+  }
+}
