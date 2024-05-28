@@ -12,10 +12,11 @@ import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 
-const Login = () => {
+const Login = ({isAdmin}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleLogin = (e) => {

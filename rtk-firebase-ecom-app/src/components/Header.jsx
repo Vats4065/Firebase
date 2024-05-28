@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { IoPersonCircle } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../redux/slice/authSlice";
-import  { ShowOnLogin, ShowOnLogout } from "./Hidemenu";
+import { ShowOnLogin, ShowOnLogout } from "./Hidemenu";
 
 const logo = (
   <div className={styles.logo}>
@@ -20,28 +20,10 @@ const logo = (
   </div>
 );
 
-const menu = (
-  <div style={{ marginLeft: "220px" }}>
-    <NavLink
-      to="/"
-      className={({ isActive }) => (isActive ? `${styles.active} ` : "")}
-    >
-      Home
-    </NavLink>
-    <NavLink
-      to="/contact"
-      style={{ marginLeft: "20px" }}
-      className={({ isActive }) => (isActive ? `${styles.active}` : "")}
-    >
-      Contact Us
-    </NavLink>
-  </div>
-);
-
 const cart = (
   <>
     <span className="d-flex align-items-center ms-3 ">
-      <NavLink to="/cart " className="text-decoration-none text-danger">
+      <NavLink to="/cart " className="d-flex text-decoration-none text-danger">
         Cart
         <FaShoppingCart size={21} />
         <span>0</span>
@@ -50,21 +32,65 @@ const cart = (
   </>
 );
 
-const Header = () => {
+
+
+const Header = ({isAdmin,setIsAdmin,username,setUsername}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [google, setGoogle] = useState(false);
 
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [isAdmin, setIsAdmin] = useState(false);
+
+
+
+  const menu = (
+    <div style={{ marginLeft: "200px" }}>
+      {isAdmin && (
+        <NavLink
+          to="/admin"
+          className={({ isActive }) => (isActive ? `${styles.active} ` : "")}
+        >
+          Admin
+        </NavLink>
+      )}
+      <NavLink
+        to="/"
+        style={{ marginLeft: "20px" }}
+        className={({ isActive }) => (isActive ? `${styles.active} ` : "")}
+      >
+        Home
+      </NavLink>
+      <NavLink
+        to="/contact"
+        style={{ marginLeft: "20px" }}
+        className={({ isActive }) => (isActive ? `${styles.active}` : "")}
+      >
+        Contact Us
+      </NavLink>
+    </div>
+  );
 
   useEffect(() => {
+
+
+
+ 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // console.log(user);
+        console.log(user);
+        const providerId = user.providerData[0].providerId;
+        if (providerId !== "password") {
+          setGoogle(true);
+        }
         // const uid = user.uid;
         // console.log(user.displayName);
         if (user.displayName === null) {
           const ul = user.email.substring(0, user.email.indexOf("@"));
           console.log(ul);
+          if (ul === "admin.eshop") {
+            setIsAdmin(true);
+          }
           const uname = ul.charAt(0).toUpperCase() + ul.slice(1);
           console.log(uname);
           setUsername(uname);
@@ -103,14 +129,40 @@ const Header = () => {
     <header className="bg-dark header d-flex align-items-center justify-content-between px-2 ">
       <div className={`${styles.header} navbar bg-dark`}>{logo}</div>
 
-      <ShowOnLogin>
-        {" "}
+      {google === true ? (
         <div className={styles.menu}>{menu}</div>
-      </ShowOnLogin>
+      ) : (
+        <ShowOnLogin>
+          <div className={styles.menu}>{menu}</div>
+        </ShowOnLogin>
+      )}
 
       <div
         className={`${styles.links} ${styles.navRight} d-flex align-items-center`}
       >
+        {
+          <ShowOnLogin>
+            <Link
+              className="username text-white opacity-75 d-flex align-items-center"
+              to="/user"
+            >
+              {" "}
+              <IoPersonCircle className="fs-3 me-1"></IoPersonCircle> {username}
+            </Link>
+            <NavLink
+              to="/orderHistory"
+              style={{ marginLeft: "10px" }}
+              className={({ isActive }) => (isActive ? `${styles.active}` : "")}
+            >
+              My orders
+            </NavLink>
+            {cart}
+            <NavLink to="/" style={{ marginLeft: "10px" }} onClick={logoutUser}>
+              Logout
+            </NavLink>
+          </ShowOnLogin>
+        }
+
         <ShowOnLogout>
           <NavLink
             to="/login"
@@ -127,24 +179,6 @@ const Header = () => {
             Register
           </NavLink>
         </ShowOnLogout>
-
-        <ShowOnLogin>
-          <Link className="username text-white opacity-75 d-flex align-items-center" to="/user" >
-            {" "}
-            <IoPersonCircle className="fs-3 me-1"></IoPersonCircle> {username}
-          </Link>
-          <NavLink
-            to="/orderHistory"
-            style={{ marginLeft: "10px" }}
-            className={({ isActive }) => (isActive ? `${styles.active}` : "")}
-          >
-            My orders
-          </NavLink>
-          {cart}
-          <NavLink to="/" style={{ marginLeft: "10px" }} onClick={logoutUser}>
-            Logout
-          </NavLink>
-        </ShowOnLogin>
       </div>
     </header>
   );

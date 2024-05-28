@@ -30,7 +30,7 @@ const Home = () => {
                           <h6>{item.title}</h6>
                           <p>{item.desc}</p>
                           <h2 className="text-dark fw-bolder mt-4">
-                            {item.price}
+                            Rs.{item.price}
                           </h2>
                         </div>
                         <div className="btn-buy btn btn-outline-primary mb-3 w-100 ">

@@ -20,7 +20,7 @@ const Signup = () => {
       .then((data) => {
         const user = data.user.accessToken;
         console.log(user);
-        localStorage.setItem("eshop-signup", user);
+        localStorage.setItem("eshop-google-signup", user);
         toast.success("Welcome to eShop");
         navigate("/");
       })
@@ -32,22 +32,26 @@ const Signup = () => {
   const handleSignup = (e) => {
     e.preventDefault();
     console.log(email, password, cpassword);
-    if (password !== cpassword) {
-      toast.error("password not match");
+    if (email === "admin.eshop@gmail.com") {
+      toast.error("You are not able to use this email address");
     } else {
-      setIsLoading(true);
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-          setIsLoading(false);
-          toast.success("Signup successful");
-          navigate("/");
-        })
-        .catch((error) => {
-          toast.error(error.message);
-          setIsLoading(false);
-        });
+      if (password !== cpassword) {
+        toast.error("password not match");
+      } else {
+        setIsLoading(true);
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user);
+            setIsLoading(false);
+            toast.success("Signup successful");
+            navigate("/");
+          })
+          .catch((error) => {
+            toast.error(error.message);
+            setIsLoading(false);
+          });
+      }
     }
   };
 
