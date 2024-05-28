@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const initialState = {
   isLoggedIn: false,
   email: null,
   userName: null,
   userID: false,
+
+
 };
 
 const authSlice = createSlice({
@@ -29,7 +32,8 @@ const authSlice = createSlice({
   },
 });
 
-export const { SET_ACTIVE_USER, REMOVE_ACTIVE_USER } = authSlice.actions;
+export const { SET_ACTIVE_USER, REMOVE_ACTIVE_USER, } =
+  authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectEmail = (state) => state.auth.email;

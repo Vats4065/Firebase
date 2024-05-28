@@ -25,7 +25,7 @@ import Myproducts from "./pages/admin/Myproducts.jsx";
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [username, setUsername] = useState("");
-
+  const [cartItem, setCartItems] = useState(0)
 
 
   return (
@@ -42,7 +42,7 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route element={<PrivateComponent></PrivateComponent>}>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/cart" element={<Cart cartItem={cartItem} setCartItems={setCartItems} />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/orderHistory" element={<OrderHistory />}></Route>
 

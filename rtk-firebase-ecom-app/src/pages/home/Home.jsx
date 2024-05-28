@@ -4,7 +4,13 @@ import Slider from "../../components/Slider";
 import { Link } from "react-router-dom";
 import Category from "../../components/Category";
 import productData from "../../components/Products";
+import { useDispatch } from "react-redux";
+import { add } from "../../redux/slice/cartSlice";
 const Home = () => {
+  const dispatch = useDispatch();
+  const addTocart = (item) => {
+    dispatch(add(item ));
+  };
   return (
     <div className="bg-light">
       <Slider></Slider>
@@ -33,7 +39,7 @@ const Home = () => {
                             Rs.{item.price}
                           </h2>
                         </div>
-                        <div className="btn-buy btn btn-outline-primary mb-3 w-100 ">
+                        <div className="btn-buy btn btn-outline-primary mb-3 w-100 " onClick={() => addTocart(item)}>
                           Buy
                         </div>
                       </div>

@@ -6,7 +6,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { toast } from "react-toastify";
 import { IoPersonCircle } from "react-icons/io5";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../redux/slice/authSlice";
 import { ShowOnLogin, ShowOnLogout } from "./Hidemenu";
 
@@ -20,29 +20,28 @@ const logo = (
   </div>
 );
 
-const cart = (
-  <>
-    <span className="d-flex align-items-center ms-3 ">
-      <NavLink to="/cart " className="d-flex text-decoration-none text-danger">
-        Cart
-        <FaShoppingCart size={21} />
-        <span>0</span>
-      </NavLink>
-    </span>
-  </>
-);
-
-
-
-const Header = ({isAdmin,setIsAdmin,username,setUsername}) => {
+const Header = ({ isAdmin, setIsAdmin, username, setUsername }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [cartItem, setcartItem] = useState(0);
   const [google, setGoogle] = useState(false);
+  const cart = (
+    <>
+      <span className="d-flex align-items-center ms-3 ">
+        <NavLink
+          to="/cart "
+          className="d-flex text-decoration-none text-danger"
+        >
+          Cart
+          <FaShoppingCart size={21} />
+          <span>{cartItem}</span>
+        </NavLink>
+      </span>
+    </>
+  );
 
   // const [username, setUsername] = useState("");
   // const [isAdmin, setIsAdmin] = useState(false);
-
-
 
   const menu = (
     <div style={{ marginLeft: "200px" }}>
@@ -71,11 +70,11 @@ const Header = ({isAdmin,setIsAdmin,username,setUsername}) => {
     </div>
   );
 
+  const cartProduct = useSelector((state) => state.cart);
   useEffect(() => {
-
-
-
- 
+    console.log(cartProduct);
+      setcartItem(cartProduct.length);
+    
     onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log(user);
@@ -109,7 +108,7 @@ const Header = ({isAdmin,setIsAdmin,username,setUsername}) => {
         dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  }, [dispatch, username]);
+  }, [dispatch, username, cartProduct]);
 
   const logoutUser = () => {
     if (window.confirm("Are You Sure To Logout")) {
